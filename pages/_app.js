@@ -1,16 +1,15 @@
 import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
+import styled from "styled-components";
+import Header from "./components/Header";
 //import type { AppProps } from "next/app";
-import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
-import { configureChains, createClient, WagmiConfig } from "wagmi";
 import {
-  mainnet,
-  polygon,
-  optimism,
-  arbitrum,
-  goerli,
-  polygonMumbai,
-} from "wagmi/chains";
+  RainbowKitProvider,
+  getDefaultWallets,
+  darkTheme,
+} from "@rainbow-me/rainbowkit";
+import { configureChains, createClient, WagmiConfig } from "wagmi";
+import { polygonMumbai } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 
@@ -43,11 +42,27 @@ const wagmiClient = createClient({
 function MyApp({ Component, pageProps }) {
   return (
     <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>
-        <Component {...pageProps} />
+      <RainbowKitProvider
+        chains={chains}
+        theme={darkTheme({
+          borderRadius: "small",
+          accentColor: "#222222",
+          accentColorForeground: "#FFFFFF",
+          //actionButtonBorder: "#222222",
+          overlayBlur: "small",
+          //fontStack: "rounded",
+          fontStack: "Roboto Mono",
+        })}
+      >
+        <Container>
+          <Header />
+        </Container>
       </RainbowKitProvider>
     </WagmiConfig>
   );
 }
 
 export default MyApp;
+
+const Container = styled.div``;
+/* <Component {...pageProps} />*/
